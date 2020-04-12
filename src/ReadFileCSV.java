@@ -1,29 +1,32 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class ReadFileCSV {
-    public static void readCSV(File csv) throws IOException {
-        FileReader file = new FileReader(csv);
+    public static void readCSV(File csv) {
+        FileReader file = null;
         BufferedReader br = null;
         String line = null;
         String comma = ",";
         String[] country;
 
         try {
+            file = new FileReader(csv);
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        try {
             br = new BufferedReader(file);
             while ((line = br.readLine()) != null) {
                 country = line.split(comma);
-                System.out.println("Country [code = "+country[4]+", name = "+country[5]+"]");
+                System.out.println("Country [code = " + country[4] + ", name = " + country[5] + "]");
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         } finally {
-            if (br != null){
+            if (br != null) {
                 try {
                     br.close();
-                } catch (IOException ex){
+                } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
